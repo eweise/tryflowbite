@@ -13,14 +13,19 @@ object TestView:
     rows = List(
       Row(cols = List(StringCol("value 1"), StringCol("value 2"))),
       Row(cols = List(StringCol("value 3"), StringCol("value 4"))),
+      Row(cols = List(StringCol("value 3"), StringCol("value 4"))),
+      Row(cols = List(StringCol("value 3"), StringCol("value 4"))),
+      Row(cols = List(StringCol("value 3"), StringCol("value 4"))),
+      Row(cols = List(StringCol("value 3"), StringCol("value 4"))),
       Row(cols = List(StringCol("value 5"), StringCol("value 6"))),
-    )
+    ),
+    selectedCell = Some((3,1))
   )
 
-  def apply(): Html[Msg] = div(cls := "flex flex-col space-around  max-w-full p-6")(
+  def apply(model:Option[TableModel]): Html[Msg] = div(cls := "flex flex-col space-around  max-w-full p-6")(
     span(text("Test View")),
     div()(
       Button.alternative("Alt", Msg.NoOp),
-      TableComponent(sampleTableModel)
+      model.map(TableComponent(_)).getOrElse(Html.text(""))
     )
   )

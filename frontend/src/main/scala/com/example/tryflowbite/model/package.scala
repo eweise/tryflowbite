@@ -2,11 +2,10 @@ package com.example.tryflowbite
 
 import tyrian.Location
 import tyrian.Cmd
-import tyrian.http._
-import zio.json._
+import tyrian.http.*
+import zio.json.*
 import zio.Task
 import zio.json.ast.Json
-
 import com.example.tryflowbite.page.*
 import com.example.tryflowbite.model.Model.User
 import com.example.tryflowbite.common.util.JwtHelper
@@ -14,6 +13,8 @@ import com.example.tryflowbite.model.Model.LoginForm
 import com.example.tryflowbite.common.model.LoginFailure
 import com.example.tryflowbite.model.Model.HomeState
 import com.example.tryflowbite.model.Model.emptyLoginForm
+import com.example.tryflowbite.view.components.TableModel
+import com.example.tryflowbite.view.pages.TestView.sampleTableModel
 
 object model {
   enum Msg {
@@ -34,7 +35,7 @@ object model {
     case UpdateLoginForm(form: LoginForm)
     case SubmitLogin
     case GreetingFromBackend(text: String)
-    case TDClicked
+    case TDClicked(cell:(Int, Int))
     case NextBackendMessage
     case Logout
   }
@@ -42,7 +43,13 @@ object model {
   /**
    * All frontend states is stored here
    */
-  case class Model(currentPage: Page, user: Option[User], loginForm: LoginForm, homeState: HomeState, isDarkMode: Boolean) {
+  case class Model(
+                    currentPage: Page, 
+                    user: Option[User], 
+                    loginForm: LoginForm, 
+                    homeState: HomeState, 
+                    isDarkMode: Boolean,
+                    tableModel:Option[TableModel] = None) {
     def toggleDarkMode: Model =
       copy(isDarkMode = !isDarkMode)
 
@@ -76,6 +83,13 @@ object model {
 
     val emptyLoginForm = LoginForm("Scala", "nopassword", None, false)
     val emptyHomeState = HomeState(None)
-    val init: Model    = Model(Page.Login, user = None, emptyLoginForm, emptyHomeState, isDarkMode = false)
+    val init: Model    = Model(
+      Page.Login, 
+      user = None, 
+      emptyLoginForm, 
+      emptyHomeState, 
+      isDarkMode = false,
+      tableModel = Some(sampleTableModel),
+    )
   }
 }

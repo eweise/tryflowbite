@@ -94,9 +94,10 @@ object WebApp extends TyrianZIOApp[Msg, Model]:
 
     case Msg.NextBackendMessage =>
       (model, HttpHelper.fetchServerMessage2)
-    case Msg.TDClicked =>
-      println("td clicked")
-      (model, Cmd.None)
+    case Msg.TDClicked((row, col)) =>
+      val newTableModel = model.tableModel.map(_.copy(selectedCell = Some((row, col))))
+      val newModel = model.modify(_.tableModel).setTo(newTableModel)
+      (newModel, Cmd.None)
 
 
     case Msg.SendHttpRequestWithAccessToken(f) =>

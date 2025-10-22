@@ -20,10 +20,16 @@ enum Col:
 
 case class Row(cols: List[Col])
 
-case class TableModel(name: String, colHeaders: List[String] = List.empty, rows: List[Row] = List.empty)
+case class TableModel(
+  name: String,
+  colHeaders: List[String] = List.empty,
+  rows: List[Row] = List.empty,
+  selectedCell: Option[(Int, Int)] = None
+)
 object TableComponent:
 
-  def apply(model: TableModel): Html[Msg] =
+  def apply(model: TableModel): Html[Msg] = {
+    var currentRow = 0
     div(cls := "relative overflow-x-auto shadow-md sm:rounded-lg")(
       table(cls := "relative overflow-x-auto shadow-md sm:rounded-lg")(
         tr(
@@ -31,9 +37,14 @@ object TableComponent:
         ),
         tbody(
           model.rows.map(row =>
+            currentRow += 1
+            val rowColor = model.selectedCell match
+               case Some((row, col)) if row == currentRow => "bg-violet-500"
+               case _ => ""
+
             tr(
               row.cols.map(col =>
-                td(cls := "px-6 py-4", onClick(Msg.TDClicked))(
+                td(cls := "px-6 py-4 " + rowColor, onClick(Msg.TDClicked((currentRow,1))))(
                   text(col.toString)
                 )
               )
@@ -42,6 +53,7 @@ object TableComponent:
         )
       )
     )
+  }
 ////    Html.raw(model.name)(
 //      """
 //        |
