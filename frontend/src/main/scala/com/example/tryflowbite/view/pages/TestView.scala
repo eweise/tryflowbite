@@ -4,7 +4,12 @@ import com.example.tryflowbite.model.Msg
 import com.example.tryflowbite.view.components.Col.StringCol
 import com.example.tryflowbite.view.components.{Button, Row, TableComponent, TableModel}
 import tyrian.Html
-import tyrian.Html.{cls, div, span, text}
+import tyrian.Html
+import tyrian.Html.*
+import com.example.tryflowbite.view.components.*
+import tyrian.Html.{attribute => attr}
+
+
 
 object TestView:
   val sampleTableModel = TableModel(
@@ -26,6 +31,18 @@ object TestView:
     span(text("Test View")),
     div()(
       Button.alternative("Alt", Msg.NoOp),
-      model.map(TableComponent(_)).getOrElse(Html.text(""))
+      model.map(TableComponent(_)).getOrElse(Html.text("")),
+      createFormView(),
     )
   )
+
+  def createFormView(): Html[Msg] = {
+     createForm(
+       formField(
+         name = "field1",
+         _value = "some data",
+          _onInput = v => Msg.NoOp,
+          _type = "text"   ,
+       )
+     )
+  }
