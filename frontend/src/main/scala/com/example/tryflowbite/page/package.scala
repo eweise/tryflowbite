@@ -33,4 +33,10 @@ package object page {
     case Cards      extends Page("/components/cards", model => CardsView(), _ => PrettyLogger.info("Entering Cards page"))
     case Carousel   extends Page("/components/carousel", model => CarouselView(), _ => PrettyLogger.info("Entering Carousel page"))
     case Test       extends Page("/components/test", model => TestView(model.tableModel), _ => PrettyLogger.info("Entering Test page"))
+    case TestAgain
+        extends Page(
+          "/components/testagain",
+          model => TestAgainView(model.testAgainModel).map(pageMsg => Msg.TestAgainPage(pageMsg)),
+          _ => PrettyLogger.info("Entering Test Again page")
+        )
 }

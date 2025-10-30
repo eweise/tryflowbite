@@ -14,6 +14,7 @@ import com.example.tryflowbite.common.model.LoginFailure
 import com.example.tryflowbite.model.Model.HomeState
 import com.example.tryflowbite.model.Model.emptyLoginForm
 import com.example.tryflowbite.view.components.TableModel
+import com.example.tryflowbite.view.pages.TestAgainView.{TestAgainModel, TestAgainMsg}
 import com.example.tryflowbite.view.pages.TestView.sampleTableModel
 
 object model {
@@ -37,6 +38,7 @@ object model {
     case GreetingFromBackend(text: String)
     case TDClicked(cell:(Int, Int))
     case NextBackendMessage
+    case TestAgainPage(msg:TestAgainMsg)
     case Logout
   }
 
@@ -49,6 +51,7 @@ object model {
                     loginForm: LoginForm, 
                     homeState: HomeState, 
                     isDarkMode: Boolean,
+                    testAgainModel: TestAgainModel,
                     tableModel:Option[TableModel] = None) {
     def toggleDarkMode: Model =
       copy(isDarkMode = !isDarkMode)
@@ -89,6 +92,7 @@ object model {
       emptyLoginForm, 
       emptyHomeState, 
       isDarkMode = false,
+      testAgainModel = TestAgainModel(3),
       tableModel = Some(sampleTableModel),
     )
   }

@@ -5,6 +5,7 @@ import tyrian.*
 import zio.*
 import zio.interop.catz.*
 import com.softwaremill.quicklens.*
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.*
 import tyrian.CSS.*
@@ -18,6 +19,7 @@ import com.example.tryflowbite.util.*
 import com.example.tryflowbite.page.*
 import com.example.tryflowbite.util.LocalStorageHelper
 import com.example.tryflowbite.until.HttpHelper
+import com.example.tryflowbite.view.pages.TestAgainView
 
 @JSExportTopLevel("TyrianApp")
 object WebApp extends TyrianZIOApp[Msg, Model]:
@@ -53,6 +55,10 @@ object WebApp extends TyrianZIOApp[Msg, Model]:
 
     case Msg.ToggleDarkMode =>
       (model.toggleDarkMode, Cmd.None)
+
+    case Msg.TestAgainPage(msg) =>
+        val (tModel, cmd) = TestAgainView.update(model.testAgainModel)(msg)
+        (model.copy(testAgainModel = tModel), Cmd.None)
 
     case Msg.GoToInternet(loc) =>
       (model, Nav.loadUrl(loc.url))

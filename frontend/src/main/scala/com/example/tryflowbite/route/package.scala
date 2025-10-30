@@ -20,6 +20,7 @@ package object route {
           case "toggle"     => Page.Toggle
           case "datepicker" => Page.Datepicker
           case "test"       => Page.Test
+          case "testagain"       => Page.TestAgain
         }
       }.toOption
 
