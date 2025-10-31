@@ -56,8 +56,8 @@ object WebApp extends TyrianZIOApp[Msg, Model]:
     case Msg.ToggleDarkMode =>
       (model.toggleDarkMode, Cmd.None)
 
-    case Msg.TestAgainPage(msg) =>
-        val (tModel, cmd) = TestAgainView.update(model.testAgainModel)(msg)
+    case Msg.TestAgainPage(testAgainMsg) =>
+        val (tModel, cmd) = TestAgainView.update(model.testAgainModel)(testAgainMsg)
         (model.copy(testAgainModel = tModel), Cmd.None)
 
     case Msg.GoToInternet(loc) =>
